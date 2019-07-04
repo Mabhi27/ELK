@@ -1,0 +1,36 @@
+version: "2.0"
+services:
+  Elastcisearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    container_name: elasticsearch
+   # volumes:
+    #  - Esvol:/data/program/
+    networks:
+      - mynet
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+  Logstash:
+    image: docker.elastic.co/logstash/logstash:6.2.4
+    container_name: Logstash1
+    #volumes:
+     # - Logvol:/data/program/
+    networks:
+      - mynet
+    ports:
+      - "5959:5959"
+  Kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.4
+    container_name: Kibana
+    #volumes:
+     # - Kibanavol:/data/program/
+    networks:
+      - mynet
+    ports:
+      - "5601:5601"
+networks:
+   mynet:
+     external: true
